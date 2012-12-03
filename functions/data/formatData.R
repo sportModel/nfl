@@ -30,6 +30,16 @@ formatData <- function() {
   sched2 <- data.frame(Week=B$Week, Away= B$VisTm, Home=B$HomeTm)
   XX <- makeX(sched2)
   
+  ## Fix partial week
+  ind <- which(is.na(y))
+  if (length(ind)) {
+    XX <- rbind(X[ind, ], XX)
+    X <- X[-ind, ]
+    y <- y[-ind]
+  }
+  
   ## Return
-  list(X=X, y=y, XX=XX, schedule=rbind(sched1, sched2))
+  schedule <- rbind(sched1, sched2)
+  schedule$Week <- as.numeric(schedule$Week)
+  list(X=X, y=y, XX=XX, schedule=schedule)
 }

@@ -11,8 +11,9 @@ makeX <- function(schedule) {
   X.Off[cbind(2*c(1:n.g),match(home,teams))] <- 1
   X.Def[cbind(2*c(1:n.g)-1,match(home,teams))] <- 1
   X.Def[cbind(2*c(1:n.g),match(away,teams))] <- 1
-  colnames(X.Off) <- paste(teams,".Off",sep="")
-  colnames(X.Def) <- paste(teams,".Def",sep="")
+  tm <- nfl.par@team[match(teams, nfl.par@team.long)]
+  colnames(X.Off) <- paste(tm,".Off",sep="")
+  colnames(X.Def) <- paste(tm,".Def",sep="")
   X <- cbind(1,X.Off,X.Def,X.h)
   colnames(X)[2*n.t+2] <- "Home"
   colnames(X)[1] <- "Intercept"
