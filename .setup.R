@@ -1,0 +1,8 @@
+options(stringsAsFactors=F)
+require(xtable)
+require(MASS)
+require(mvtnorm)
+source.dir("functions")
+source.dir("functions/data")
+source.dir("functions/stat")
+source.dir("functions/html")
