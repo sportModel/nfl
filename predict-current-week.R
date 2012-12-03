@@ -1,5 +1,6 @@
-nfl.par <- setDefaultPar(2011)
+nfl.par <- setDefaultPar(2012)
 nfl <- formatData()
+
 # load(file=paste("data/",nfl.par@year,"/prior.RData",sep=""))
 most.recent.week <- nfl$schedule$Week[nrow(nfl$X)/2]
 

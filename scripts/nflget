@@ -1,0 +1,3 @@
+#!/bin/bash
+# Requires 1 argument: year
+wget http://www.nfl.com/schedules?seasonType=REG\&season=$1 -O ../data/$1/nfl.html
