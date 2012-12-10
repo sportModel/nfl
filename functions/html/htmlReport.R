@@ -1,20 +1,16 @@
-htmlReport <- function(schedule,ms,prH)
-  {
-    cat("Week",schedule[1,1],"<br><br><br>\n")
-    md <- ms[,2]-ms[,1]
-    ms <- round(ms,1)
-    for (i in 1:length(prH))
-      {
-        away <- schedule[i,2]
-        home <- schedule[i,3]
-        game <- paste(away,"@", home)
-        cat("<b>",game,"</b><br><br>\n")
-        cat("Probability of ",away,": ",round(1-prH[i],3),"<br>\n",sep="")
-        cat("Probability of ",home,": ",round(prH[i],3),"<br>\n",sep="")
-        if (md[i] > 0) cat("Mean score: ", home, " ",ms[i,2],", ",away," ",ms[i,1],"<br>\n",sep="")
-        if (md[i] < 0) cat("Mean score: ", away, " ",ms[i,1],", ",home," ",ms[i,2],"<br>\n",sep="")
-        if (md[i]>0) cat("Median differential: ", home, " by ", round(md[i],digits=0),"<br>\n",sep="")
-        if (md[i]<0) cat("Median differential: ", away, " by ", round(-md[i],digits=0),"<br>\n",sep="")
-        cat("<br><br>\n")
-      }
-  }
+## DEFUNCT
+htmlReport <- function(schedule, ms, prH) {
+  sched <- schedule
+  sched$Home <- nfl.par@team[match(schedule$Home, nfl.par@team.long)]
+  sched$Away <- nfl.par@team[match(schedule$Away, nfl.par@team.long)]
+  Winner <- character(nrow(sched))
+  Winner[prH > .5] <- sched[prH > .5, 3]
+  Winner[prH < .5] <- sched[prH < .5, 2]
+  X <- data.frame(Predicted = apply(round(ms[,1:2]),1,paste,collapse="-"),
+                  PrHome = round(100*prH),
+                  PrWin = round(100*pmax(prH,1-prH)),
+                  MedDiff = paste(Winner, "by", round(abs(apply(ms,1,diff)))))
+  print(htmlc(htmlText(paste("Week", schedule$Week[1])),
+              htmlTable(X, class="'sortable ctable'")),
+        file=paste(nfl.par@website.location,"/",nfl.par@year,"_Week",i,"Predictions.html",sep=""))
+}

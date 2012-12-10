@@ -11,7 +11,7 @@ save(fit, file=paste("data/", nfl.par@year, "/fit", week, ".RData",sep=""))
 
 ## Prediction and summarization
 teamPar(week)
-predictGames(week, nfl$schedule, out="return")
+predictGames(week, rbind(nfl$X, nfl$XX))
 
 ## Update website
 updateWebsite(nfl)
