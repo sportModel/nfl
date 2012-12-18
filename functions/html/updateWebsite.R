@@ -3,7 +3,7 @@ updateWebsite <- function(nfl) {
   makeIndex()
   makeTeamPar(week)
   makePredictions(nfl$schedule, week)
+  makeRecap(week)
   makeTeams(nfl)
   makeTeamPages(week)
-  makeRecap(week)
 }

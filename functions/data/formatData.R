@@ -5,6 +5,7 @@
 ##   schedule (the entire schedule for all weeks)
 formatData <- function() {
   filename <- paste("data/",nfl.par@year,"/nfl.html",sep="")
+  require(XML)
   raw <- readHTMLTable(filename)
   A <- raw[[1]]
   B <- raw[[2]]
