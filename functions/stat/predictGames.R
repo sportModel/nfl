@@ -15,7 +15,7 @@ predictGames <- function(week, X, N=10000, out=c("save", "return")) {
   rownames(ms) <- Game
   
   ## Pr(Home win)
-  posterior <- rmvnorm(N,fit$mu,fit$sigma,method="svd")
+  posterior <- rmvnorm(N, fit$mu, fit$sigma, method="svd")
   prH <- prHome(X, posterior)
   names(prH) <- Game
   

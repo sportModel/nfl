@@ -1,7 +1,10 @@
 makeTeamPar <- function(week) {
-  load(paste("data/",nfl.par@year,"/par",week-1,".RData",sep=""))
-  Xold <- X
+  if (week!=0) {
+    load(paste("data/",nfl.par@year,"/par",week-1,".RData",sep=""))
+    Xold <- X
+  }
   load(paste("data/",nfl.par@year,"/par",week,".RData",sep=""))
+  if (week==0) Xold <- X
   ua <- floor(pmax(0,X[,3]-Xold[,3]))
   da <- floor(pmax(0,Xold[,3]-X[,3]))
   Trend <- character(nrow(X))
@@ -24,7 +27,15 @@ makeTeamPar <- function(week) {
   
   filename <- paste(nfl.par@website.location,"/",nfl.par@year,"_TeamPar.html",sep="")
   sink(filename)
-  print(display,type="html",html.table.attributes="class=\"sortable ctable\"")
+  print(display, type="html", html.table.attributes="class=\"sortable ctable\"")
+  print("<b>Trend</b>: Hi<br>")
   sink()
   cleanTable(filename)
+  ind <- order(X[,"Diff"],decreasing=T)
+  print(htmlc(htmlTable(X[ind,], digits=c(0,0,1,1,1), class="'sortable ctable'"),
+              htmlText("<b>Trend</b>: Has <b>Diff</b> moved significantly up or down since last week?", align="left"),
+              htmlText("<b>Off</b>: Number of points the team would score against an average opponent at a neutral site", align="left"),
+              htmlText("<b>Def</b>: Number of points the team would allow against an average opponent at a neutral site", align="left"),
+              htmlText("<b>Diff</b>: Point differential between the team and an average opponent at a neutral site.  A positive number implies that the team would beat the average opponent.", align="left")),
+        file=filename)
 }

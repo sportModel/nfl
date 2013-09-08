@@ -1,6 +1,14 @@
 makePrior <- function(year) {
   priorYear <- year-1
-  maxWeek <- 17 ## Improve in future: scan for max week
+  
+  ## Scan for maxWeek
+  priorFiles <- list.files(paste("data/", priorYear, sep=""))
+  priorFiles <- priorFiles[grep("fit", priorFiles)]
+  priorFiles <- gsub("fit", "", priorFiles)
+  priorFiles <- gsub(".RData", "", priorFiles, fixed=TRUE)
+  maxWeek <- max(as.numeric(priorFiles)) ## Improve in future: scan for max week
+  
+  ## Make prior
   load(paste("data/", priorYear, "/fit", maxWeek, ".RData", sep=""))
   if (is.null(fit$n)) fit$n <- 512
   prior <- list(beta=fit$mu[1:66],

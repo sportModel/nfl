@@ -2,6 +2,7 @@ makePredictions <- function(schedule, last.week, title) {
   max.week <- max(schedule$Week)
   if (last.week == max.week) return()
   load(paste("data/",nfl.par@year,"/pred",last.week,".RData",sep=""))
+  explicitTitle <- !missing(title)
   for (i in (last.week+1):max.week) {
     ind <- which(schedule$Week==i)
     Winner <- character(length(ind))
@@ -14,9 +15,12 @@ makePredictions <- function(schedule, last.week, title) {
                     PrWin = round(100*pmax(prH[ind],1-prH[ind])),
                     MedDiff = paste(Winner, "by", round(abs(apply(ms[ind,,drop=FALSE],1,diff)))))
     rownames(X) <- names(prH)[ind]
-    if (missing(title)) title <- paste("Week", schedule[ind,]$Week[1])
+    if (!explicitTitle) title <- paste("Week", i)
     print(htmlc(htmlText(paste("<h3>", title, "</h3>")),
-                htmlTable(X, class="'sortable ctable'", digits=0)),
+                htmlTable(X, class="'sortable ctable'", digits=0),
+                htmlText("<b>Predicted</b>: Posterior mean final score for each team", align="left"),
+                htmlText("<b>PrHome</b>: Posterior probability that the home team will win", align="left"),
+                htmlText("<b>PrWin</b>: Posterior probability that the favorite will win (i.e.,<br> must be above 50%).  Try sorting by PrWin to order <br>games from 'locks' to 'tossups'.", align="left")),
           file=paste(nfl.par@website.location,"/",nfl.par@year,"_Week",i,".html",sep=""))
   }
 }

@@ -4,5 +4,5 @@ Wplot <- function(prW,w,N=10000) {
   p <- prop.table(table(apply(X,1,sum)))
   names(p) <- w+as.numeric(names(p))
   exW <- sum(p*as.numeric(names(p)))
-  barplot(p,ylab="Probability",xlab="Wins",main=paste("Expected wins: ",round(exW,1)))
+  barplot(p, ylab="Probability", xlab="Wins", main=paste("Expected wins: ", round(exW,1)), border="white")
 }

@@ -4,7 +4,7 @@ makeTeam <- function(team, Off, Def, Diff, prW, w) {
   fn3 <- paste(nfl.par@year,"_",team,"off.png",sep="")
   fn4 <- paste(nfl.par@year,"_",team,"def.png",sep="")
 
-  week <- nfl$schedule$Week[length(nfl$y)/2]
+  week <- if (length(nfl$y)==0) 0 else nfl$schedule$Week[length(nfl$y)/2]  
   if (week < 17) {
     png(paste(nfl.par@website.location,"/compiled/",fn1,sep=""))
     Wplot(prW,w)
@@ -26,11 +26,13 @@ makeTeam <- function(team, Off, Def, Diff, prW, w) {
     cat("<img src=\"",fn1,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
     cat("\n<br><br><br>\n")    
   }
-  cat("<img src=\"",fn2,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
-  cat("\n<br><br><br>\n")
-  cat("<img src=\"",fn3,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
-  cat("\n<br><br><br>\n")
-  cat("<img src=\"",fn4,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
-  cat("\n<br><br><br>\n")
+  if (week > 0) {
+    cat("<img src=\"",fn2,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
+    cat("\n<br><br><br>\n")
+    cat("<img src=\"",fn3,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
+    cat("\n<br><br><br>\n")
+    cat("<img src=\"",fn4,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
+    cat("\n<br><br><br>\n")    
+  }
   sink()
 }

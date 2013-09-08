@@ -1,8 +1,9 @@
 model <- function() {
   ## Likelihood
   for (i in 1:n) {
-    y[i] ~ dnorm(mu[i], tau)
-    mu[i] <- inprod(X[i,], b[])
+    y[i] ~ dt(eta[i], tau, 25)
+    #y[i] ~ dnorm(mu[i], tau)
+    eta[i] <- inprod(X[i,], b[])
   }
   
   ## Prior on beta

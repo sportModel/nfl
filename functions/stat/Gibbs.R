@@ -13,5 +13,7 @@ Gibbs <- function(X, y, prior, N) {
   
   ## Fit
   fit <- jags(nfl.data, init=NULL, nfl.parm, model=model, n.chains=1, n.iter=N, n.burn=0, DIC=FALSE)
-  fit$BUGSoutput$sims.matrix
+  val <- fit$BUGSoutput$sims.matrix
+  colnames(val) <- c(colnames(X), "h")
+  val
 }
