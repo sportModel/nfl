@@ -1,11 +1,10 @@
-predictGames <- function(week, X, N=10000, out=c("save", "return"), neutral=FALSE) {
+predictGames <- function(week, X, N=10000, out=c("save", "return")) {
   out <- match.arg(out)
   load(paste("data/",nfl.par@year,"/fit",week,".RData",sep=""))
-  if (neutral) X[,"Home"] <- 0
   n.g <- nrow(X)/2
   ind <- match(colnames(X), names(fit$mu))
-  a <- apply(X[2*(1:n.g)-1,], 1, function(x) {a <- colnames(X)[which(x==1)]; a[grep("Off",a)]})
-  h <- apply(X[2*(1:n.g),], 1, function(x) {a <- colnames(X)[which(x==1)]; a[grep("Off",a)]})
+  a <- apply(X[2*(1:n.g)-1,,drop=FALSE], 1, function(x) {a <- colnames(X)[which(x==1)]; a[grep("Off",a)]})
+  h <- apply(X[2*(1:n.g),,drop=FALSE], 1, function(x) {a <- colnames(X)[which(x==1)]; a[grep("Off",a)]})
   Game <- gsub(".Off", "", paste(a, h, sep=" @ "), fixed=TRUE)
   
   ## Mean scores

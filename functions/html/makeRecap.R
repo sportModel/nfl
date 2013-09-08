@@ -7,10 +7,11 @@ makeRecap <- function(last.week) {
   h <- apply(X[2*(1:n.g),], 1, function(x) {a <- colnames(X)[which(x==1)]; a[grep("Off",a)]})
   Game <- gsub(".Off", "", paste(a, h, sep=" @ "), fixed=TRUE)
   correct.cum <- c(0,0)
+  
   for (i in 1:last.week) {
     load(paste("data/",nfl.par@year,"/pred",i-1,".RData",sep=""))
     ind <- which(results$Week==i)
-    id1 <- paste("Week",i,names(prH), sep="")
+    id1 <- paste("Week", i, names(prH), sep="")
     id2 <- paste("Week", results$Week, Game, sep="")
     res <- results[match(id1[ind], id2), ]
     wl <- cbind(prH[ind]>.5, res[,3] > res[,2])
@@ -39,6 +40,9 @@ makeRecap <- function(last.week) {
     load(paste("data/",nfl.par@year,"/par",i,".RData",sep=""))
     Xnew <- X
     X2 <- Xnew-Xold
+    a <- 2*(min(ind)-1) + 1
+    active <- extractTeams(rbind(nfl$X[a:nrow(nfl$X),], nfl$XX))
+    X2 <- X2[rownames(X2) %in% active, ]
     
     ## Display
     print(htmlc(htmlText(paste("<h3>Week", i, "</h3>")),

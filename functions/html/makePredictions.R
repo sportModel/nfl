@@ -1,4 +1,4 @@
-makePredictions <- function(schedule, last.week) {
+makePredictions <- function(schedule, last.week, title) {
   max.week <- max(schedule$Week)
   if (last.week == max.week) return()
   load(paste("data/",nfl.par@year,"/pred",last.week,".RData",sep=""))
@@ -9,12 +9,13 @@ makePredictions <- function(schedule, last.week) {
     Away <- splitleft(names(prH), " @ ")[ind]
     Winner[prH[ind] > .5] <- Home[prH[ind] > .5]
     Winner[prH[ind] < .5] <- Away[prH[ind] < .5]
-    X <- data.frame(Predicted = apply(round(ms[ind, 1:2]),1,paste,collapse="-"),
+    X <- data.frame(Predicted = apply(round(ms[ind, 1:2, drop=FALSE]),1,paste,collapse="-"),
                     PrHome = round(100*prH[ind]),
                     PrWin = round(100*pmax(prH[ind],1-prH[ind])),
-                    MedDiff = paste(Winner, "by", round(abs(apply(ms[ind,],1,diff)))))
+                    MedDiff = paste(Winner, "by", round(abs(apply(ms[ind,,drop=FALSE],1,diff)))))
     rownames(X) <- names(prH)[ind]
-    print(htmlc(htmlText(paste("<h3>Week", schedule[ind,]$Week[1], "</h3>")),
+    if (missing(title)) title <- paste("Week", schedule[ind,]$Week[1])
+    print(htmlc(htmlText(paste("<h3>", title, "</h3>")),
                 htmlTable(X, class="'sortable ctable'", digits=0)),
           file=paste(nfl.par@website.location,"/",nfl.par@year,"_Week",i,".html",sep=""))
   }
