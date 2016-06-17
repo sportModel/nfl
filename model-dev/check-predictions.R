@@ -1,32 +1,26 @@
 ## Read/format data and prior
-nfl.par <- setDefaultPar(2009)
+nfl.par <- setDefaultPar(2012)
 nfl <- formatData()
 Y <- matrix(nfl$y,ncol=2,byrow=TRUE)
 P <- matrix(NA,nrow=nrow(Y),ncol=ncol(Y))
 pr <- numeric(nrow(Y))
-for (i in 1:17)
+for (i in 1:21)
   {
     load(paste("data/",nfl.par@year,"/pred",i-1,".RData",sep=""))
     ind <- which(nfl$schedule$Week==i)
     P[ind,] <- ms[ind,]
-    pr[ind] <- prH$prH[ind]
+    pr[ind] <- prH[ind]
   }
 
-examine <- function(x,y,...)
-  {
-    fit <- lm(y~x)
-    print(summary(fit))
-    fit0 <- lm(y~0+x)
-    print(summary(fit0))
-    ##par(mfrow=c(2,2))
-    plot(x,y,pch=16,cex=0.7,col=rgb(0,0,0,alpha=0.5),...)
-    abline(0,1)
-    abline(coef=coef(fit),col="red")
-    ##hist(fit$residuals)
-    ##plot(fit$fitted,fit$residuals)
-    ##fit <- lowess(y~x)
-    ##lines(fit,col="blue")
-  }
+examine <- function(x,y,...) {
+  fit <- lm(y~x)
+  print(summary(fit))
+  fit0 <- lm(y~0+x)
+  print(summary(fit0))
+  plot(x, y, pch=19, cex=0.7, col=rgb(0,0,0,alpha=0.5), ...)
+  abline(coef=coef(fit),col="red")
+}
+
 examine(P[,1],Y[,1])
 examine(P[,2],Y[,2])
 examine(P[,2]-P[,1],Y[,2]-Y[,1])

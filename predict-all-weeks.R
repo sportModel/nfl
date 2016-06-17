@@ -1,5 +1,5 @@
 ## Setup
-nfl.par <- setDefaultPar(2012)
+nfl.par <- setDefaultPar(2015)
 nfl <- formatData()
 load(file=paste("data/",nfl.par@year,"/prior.RData",sep=""))
 
@@ -15,10 +15,10 @@ for (i in 0:week) {
   }
   fit <- list(mu=apply(output,2,mean), sigma=cov(output), n=nrow(nfl$X))
   save(fit, file=paste("data/", nfl.par@year, "/fit", i, ".RData",sep=""))
-  
+
   ## Prediction & summarization
   teamPar(i)
-  predictGames(i, nfl$schedule)
+  predictGames(i, rbind(nfl$X, nfl$XX))
 }
 
 ## Web

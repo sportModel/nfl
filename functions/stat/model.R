@@ -2,7 +2,7 @@ model <- function() {
   ## Likelihood
   for (i in 1:n) {
     y[i] ~ dt(eta[i], tau, 25)
-    #y[i] ~ dnorm(mu[i], tau)
+    #y[i] ~ dnorm(eta[i], tau)
     eta[i] <- inprod(X[i,], b[])
   }
   
