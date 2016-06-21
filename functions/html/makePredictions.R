@@ -1,8 +1,7 @@
-makePredictions <- function(schedule, last.week, title) {
+makePredictions <- function(schedule, last.week) {
   max.week <- max(schedule$Week)
   if (last.week == max.week) return()
   load(paste("data/",nfl.par@year,"/pred",last.week,".RData",sep=""))
-  explicitTitle <- !missing(title)
   for (i in (last.week+1):max.week) {
     ind <- which(schedule$Week==i)
     Winner <- character(length(ind))
@@ -15,8 +14,7 @@ makePredictions <- function(schedule, last.week, title) {
                     PrWin = round(100*pmax(prH[ind],1-prH[ind])),
                     MedDiff = paste(Winner, "by", round(abs(apply(ms[ind,,drop=FALSE],1,diff)))))
     rownames(X) <- names(prH)[ind]
-    if (!explicitTitle) title <- paste("Week", i)
-    print(htmlc(htmlText(paste("<h3>", title, "</h3>")),
+    print(htmlc(htmlText(paste("<h3>", nfl.par@Title[i], "</h3>")),
                 htmlTable(X, class="'sortable ctable'", digits=0),
                 htmlText("<b>Predicted</b>: Posterior mean final score for each team", align="left"),
                 htmlText("<b>PrHome</b>: Posterior probability that the home team will win", align="left"),
