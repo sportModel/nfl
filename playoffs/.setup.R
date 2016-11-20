@@ -1,2 +1,0 @@
-setwd("..")
-source(".setup.R")

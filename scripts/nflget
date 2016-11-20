@@ -1,3 +1,0 @@
-#!/bin/bash
-# Requires 1 argument: year
-wget http://www.pro-football-reference.com/years/$1/games.htm -O ../data/$1/nfl.html
