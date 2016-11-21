@@ -14,7 +14,7 @@ setDefaultPar <- function(year) {
     names(divisions) <- c("AFC East","AFC North","AFC South","AFC West","NFC East","NFC North","NFC South","NFC West")
     w1 <- 5
     w2 <- 5
-    website.location <- "../web/football"
+    website.location <- "web"
     Title <- paste("Week", 1:17)
     Title <- c(Title, "Playoffs: Wild Card", "Playoffs: Divisional", "Playoffs: Conference", "Playoffs: Super Bowl")
     val <- new("NFLpar",

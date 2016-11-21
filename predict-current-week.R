@@ -1,5 +1,5 @@
 ## Setup
-nfl.par <- setDefaultPar(2015)
+nfl.par <- setDefaultPar(2016)
 nfl <- formatData()
 load(file=paste("data/",nfl.par@year,"/prior.RData",sep=""))
 
