@@ -1,0 +1,24 @@
+# Site settings
+title: NFL Predictions
+description: Bayesian models for NFL outcomes
+url: "http://sportmodel.github.io/nfl"
+baseurl: ""
+github_username:  sportModel
+
+# Build settings
+markdown: kramdown
+exclude: [new]
+
+# Defaults
+defaults:
+  -
+    scope:
+      type: posts
+    values:
+      layout: post
+      rel: "../../../"
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
