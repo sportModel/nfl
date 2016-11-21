@@ -7,7 +7,7 @@ formatData <- function() {
   filename <- paste("data/",nfl.par@year,"/nfl.html",sep="")
   require(XML)
   raw <- readHTMLTable(filename)
-  
+
   ## Format past games
   A <- raw[[1]]
   A <- subset(A, Week != "Week")
@@ -23,7 +23,7 @@ formatData <- function() {
   Home[!at] <- A$Winner[!at]
   sched1 <- data.frame(Week = A$Week, Away = Away, Home = Home)
   y <- as.numeric(apply(A[, c(".1", "PtsW", "PtsL")], 1, function(x) if (x[1]=="@") x[2:3] else x[3:2]))
-  
+
   ## Format future games
   sched2 <- NULL
   if (length(raw) > 1) {
@@ -38,7 +38,7 @@ formatData <- function() {
   y <- y[1:n]
   X <- allX[1:n,]
   XX <- allX[-(1:n),]
-  
+
   ## Return
   schedule <- rbind(sched1, sched2)
   schedule$Week[schedule$Week=="WildCard"] <- max(suppressWarnings(as.numeric(schedule$Week)), na.rm=TRUE) + 1
