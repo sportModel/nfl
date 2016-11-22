@@ -17,8 +17,7 @@ gibbs <- function(X, y, prior=NULL, N=100000, w1=nfl.par@w1, w2=nfl.par@w2) {
   colnames(val) <- c(colnames(X),"h")
   XtX <- crossprod(X)
   Xty <- crossprod(X,y)
-  for(i in 1:N)
-  {
+  for(i in 1:N) {
     H <- prior$H/w1 + h.curr*XtX
     H.inv <- ginv(H)
     mean <- H.inv%*%(prior$H%*%prior$beta/w1 + h.curr*Xty)

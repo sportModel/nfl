@@ -8,7 +8,7 @@ makeTeams <- function(nfl) {
     l[i] <- sum(nfl$y[off.ind] < nfl$y[def.ind])
     t[i] <- sum(nfl$y[off.ind] == nfl$y[def.ind])
   }
-  
+
   ## create list of matrices
   n.d <- length(nfl.par@divisions)
   X <- D <- vector("list",n.d)
@@ -22,7 +22,7 @@ makeTeams <- function(nfl) {
     X[[d]][,4] <- l[ind]
     X[[d]][,5] <- t[ind]
     X[[d]] <- X[[d]][order((w[ind]+0.5*t[ind])/(w[ind]+l[ind]+t[ind]),decreasing=TRUE),]
-    
+
     ## Format for printing
     link <- character(length(teams))
     for (i in 1:length(teams)) {
@@ -33,10 +33,11 @@ makeTeams <- function(nfl) {
     D[[d]] <- xtable(X[[d]])
     align(D[[d]]) <- c("l","l","r","r","r")
   }
-  
+
   ## display
   filename <- paste(nfl.par@website.location,"/",nfl.par@year,"_Teams.html",sep="")
   sink(filename)
+  cat("---\n---\n")
   cat("<TABLE class=\"container\">\n")
   for (i in 1:4)
   {

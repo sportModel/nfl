@@ -2,12 +2,13 @@ makeX <- function(schedule) {
   away <- schedule[,2]
   home <- schedule[,3]
   n.g <- dim(schedule)[1]
-  teams <- sort(unique(c(home,away)))
+  teams <- nfl.par@team.long
+  #teams <- sort(unique(c(home,away)))
   n.t <- length(teams)
-  X.Off <- matrix(0,ncol=n.t,nrow=2*n.g)
-  X.Def <- matrix(0,ncol=n.t,nrow=2*n.g)
-  X.h <- matrix(c(-1,1),ncol=1,nrow=2*n.g)
-  X.Off[cbind(2*c(1:n.g)-1,match(away,teams))] <- 1
+  X.Off <- matrix(0, ncol=n.t, nrow=2*n.g)
+  X.Def <- matrix(0, ncol=n.t, nrow=2*n.g)
+  X.h <- matrix(c(-1,1), ncol=1, nrow=2*n.g)
+  X.Off[cbind(2*c(1:n.g)-1, match(away,teams))] <- 1
   X.Off[cbind(2*c(1:n.g),match(home,teams))] <- 1
   X.Def[cbind(2*c(1:n.g)-1,match(home,teams))] <- 1
   X.Def[cbind(2*c(1:n.g),match(away,teams))] <- 1

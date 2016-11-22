@@ -22,6 +22,7 @@ makeTeam <- function(team, Off, Def, Diff, prW, w) {
 
   filename <- paste(nfl.par@website.location,"/",nfl.par@year,"_",team,".html",sep="")
   sink(filename)
+  cat("---\n---\n")
   if (week < 17) {
     cat("<img src=\"img/",fn1,"\" class=\"center\" height=\"480\" width=\"480\">",sep="")
     cat("\n<br><br><br>\n")
