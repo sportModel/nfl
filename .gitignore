@@ -3,3 +3,4 @@ v/*
 !functions/data/
 !scripts/*
 data/*
+plots/*.svg
